@@ -1,0 +1,135 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static "Css/bootstrap.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "Css/bootstrap-responsive.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "Css/style.css" %}" />
+    <script type="text/javascript" src="{% static "Js/jquery.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/jquery.sorted.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/bootstrap.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/ckform.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/common.js" %}"></script>
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+<!--<form class="form-inline definewidth m20" action="index.html" method="GET">-->
+
+    服务器管理：
+    <input type="text" name="rolename" id="rolename"class="abc input-default" placeholder="" value="">
+    <Input Type="Text" Size="20" Id="Text3" Value="0">&nbsp;&nbsp;
+    <!--<button type="botton"  name="se" class="btn btn-primary" id="search">查询</button>&nbsp;&nbsp; <button type="button" class="btn btn-success" id="addnew">手动增加服务器</button>-->
+    <button type="botton" class="btn btn-primary" id="search">查询</button>&nbsp;&nbsp; <button type="button" class="btn btn-success" id="addnew">手动增加服务器</button>
+    {% csrf_token %}
+<!--</form>-->
+<table  id="box" class="table table-bordered table-hover definewidth m10" >
+    <thead>
+    <tr>
+        <th>主机IP</th>
+        <th>名称</th>
+        <th>磁盘使用</th>
+        <th>CPU使用</th>
+        <th>内存使用</th>
+        <th>网络/操作</th>
+        <th>应用/操作</th>
+    </tr>
+    </thead>
+     <tr>
+            <!--{% for server in data.length  %}-->
+                <td id="d1">fdasfdsafdsa</td>
+                <td id="d2" value="2">fdsafdsaf</td>
+                <td id="d3" value="3">fdsafdsa</td>
+                <td id="d4" value="4">fdsafdsa</td>
+                <td id="d5" value="5">fdsafdsa</td>
+                <td id="d6" value="6">fdsaf<a href="edit.html">重启</a></td>
+                <td id="d7" value="7">fdsafdsa<a href="edit.html">重启</a></td>
+             <!--{% endfor %}-->
+     </tr>
+</table>
+<!--<div id="ss" ></div>-->
+<div class="inline pull-right page">
+         10122 条记录 1/507 页  <a href='#'>下一页</a>     <span class='current'>1</span><a href='#'>2</a><a href='/chinapost/index.php?m=Label&a=index&p=3'>3</a><a href='#'>4</a><a href='#'>5</a>  <a href='#' >下5页</a> <a href='#' >最后一页</a>    </div>
+</body>
+</html>
+<script>
+    $(function () {
+
+		$('#addnew').click(function(){
+
+				window.location.href='/deptadd';
+		 });
+    });
+
+    $(function () {
+        $('#search').click(function () {
+               $.ajax({
+                type: "POST",
+                url: "/ssearch/",
+                datatype: 'json',
+                data: {name: "a"},
+                success: function (server_list, statusText, xmlHttpRequest) {
+                    //先把表体部分清空
+				//eval获取返回的JSON对象集合
+                    //var data =(new Function("","return "+server_list))();
+                    var data = eval('(' + server_list + ')');
+                    alert(data[22].fields.plan_reason);
+                    document.getElementById("d1").value=data[22].fields.plan_reason;
+                    document.getElementById("d2").value=data[22].fields.plan_detail;
+                    document.getElementById("d3").value=data[22].fields.stock_name;
+                    document.getElementById("d4").value=data[22].fields.stock_setor;
+                    document.getElementById("d5").value=data[22].fields.price_postion;
+                    document.getElementById("d6").value=data[22].fields.stop_price;
+                    document.getElementById("d7").value=data[22].fields.plan_date;
+                    //$('#d1').value=data[22].fields.plan_reason;
+                    //$('#d2').value=data[22].fields.plan_detail;
+                   // $('#d3').value=data[22].fields.stock_name;
+                    //$('#d4').value=data[22].fields.stock_setor;
+                    //$('#d5').value=data[22].fields.price_postion;
+                    //$('#d6').value=data[22].fields.stop_price;
+                    //$('#d7').value=data[22].fields.plan_date;
+                    alert(data.length);
+                    //var data =(new Function("","return "+server_list))();
+                    //var data = eval('(' + server + ')');
+                   //$("#box").html(data);
+				  //把数据显示到页面的方法
+                    //alert(data.length)
+                }
+            });
+    });
+});
+$(function () {
+        $('#searcha').click(function () {
+               $.ajax({
+                type: "POST",
+                url: "/hello/",
+                datatype: 'html',
+                success: function (result) {
+
+                    $('#ss').html(result);
+
+                }
+            });
+    });
+});
+</script>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>add_info</title>
+</head>
+<body>
+<form action="{% url 'add_info' %}" method="post">
+    {% csrf_token %}
+    stock_name: <input type="text" name="stock_name"><br>
+    stock_setor:<input type="text" name="stock_setor"><br>
+    plan_date:  <input type="text" name="plan_date"><br>
+    price_postion:<input type="text" name="price_postion"><br>
+    amount_postion:<input type="text" name="amount_postion"><br>
+    allow_buy:<input type="text" name="allow_buy"><br>
+    price_target:<input type="text" name="price_target"><br>
+    stop_price:<input type="text" name="stop_price"><br>
+    ratio_profit:<input type="text" name="ratio_profit"><br>
+    plan_days:<input type="text" name="plan_days"><br>
+    total_postion:<input type="text" name="total_postion"><br>
+    action_buy:<input type="text" name="action_buy"><br>
+    plan_reason:<input type="text" name="plan_reason"><br>
+    plan_detail:<input type="text" name="plan_detail"><br>
+    <input type="submit" name="s" value="save"><br>
+</form>
+<form action="{% url 'add_info' %}" method="post">
+    {% csrf_token %}
+    search_name: <input type="text" name="search_name"><br>
+   <input type="submit" name="se" value="search"><br>
+<table border="1">
+    <tr>
+        <td>用户名</td>
+        <td>密码</td>
+        <td>Frist name</td>
+        <td>Last name</td>
+    </tr>
+    <tr>
+        {% for plan in plan_list  %}
+        <td>{{ plan.plan_date }}</td>
+        <td>{{ plan.stock_code }}</td>
+        <td>{{ plan.stock_name }}</td>
+        <td>{{ plan.stock_setor}}</td>
+            </tr>
+        {% endfor %}
+    </tr>
+</table>
+</form>
+</body>
+</html>

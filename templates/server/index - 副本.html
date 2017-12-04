@@ -1,0 +1,201 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static "Css/bootstrap.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "Css/bootstrap-responsive.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "Css/style.css" %}" />
+    <script type="text/javascript" src="{% static "Js/jquery.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/jquery.sorted.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/bootstrap.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/ckform.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/common.js" %}"></script>
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;服务器管理：
+    <input type="text" name="rolename" id="rolename"class="abc input-default" placeholder="" value="">
+    <!--<button type="botton"  name="se" class="btn btn-primary" id="search">查询</button>&nbsp;&nbsp; <button type="button" class="btn btn-success" id="addnew">手动增加服务器</button>-->
+    <button type="botton" class="btn btn-primary" id="search">查询</button>&nbsp;&nbsp;
+    <button type="button" class="btn btn-success" id="addnew">增加服务器</button>&nbsp;&nbsp;
+    <button type="button" class="btn btn-success" id="console">操作</button>;
+<table  class="table table-bordered table-hover definewidth m10" >
+    <thead>
+    <tr>
+        <th width="6%">系统</th>
+        <th width="6%">主机IP</th>
+        <th width="6%">磁盘</th>
+        <th width="6%">CPU</th>
+        <th width="6%">内存</th>
+        <th width="6%">网络</th>
+        <th width="6%">应用1</th>
+        <th width="6%">应用2</th>
+        <th width="6%">应用3</th>
+        <th width="6%">应用4</th>
+        <th width="6%">虚机名称</th>
+        <th width="6%">虚拟主机</th>
+        <th width="6%">描述</th>
+        <th width="6%">虚拟/物理</th>
+    </tr>
+    </thead>
+      <tbody id="_table"></tbody>
+</table>
+<div class="inline pull-right page">
+         10122 条记录 1/507 页  <a href='#'>下一页</a>     <span class='current'>1</span><a href='#'>2</a><a href='/chinapost/index.php?m=Label&a=index&p=3'>3</a><a href='#'>4</a><a href='#'>5</a>  <a href='#' >下5页</a> <a href='#' >最后一页</a>    </div>
+</body>
+</html>
+<script>
+    $(function () {
+
+		$('#addnew').click(function(){
+
+				window.location.href='/deptadd';
+		 });
+    });
+
+ $(function () {
+
+        $('#search').click(function () {
+
+            $.getJSON('/searchserver/',function(server){
+                    $("#_table").html("");
+                    var data = eval('(' + server + ')');
+                    var _table = document.getElementById("_table");
+                    var _row;var _cell1;var _cell2;var _cell3;var _cell4;var _cell5;var _cell6;var _cell7;var _cell8;
+                    var _cell9;var _cell10; var _cell11; var _cell12; var _cell13;var _cell14;
+                    for(var i = 0; i < data.length; i++) {
+                        _row = document.createElement("tr");
+                        document.getElementById("_table").appendChild(_row);
+                                _cell1 = document.createElement("td");
+                                _cell1.innerText = data[i].fields.systemtype;
+                                _row.appendChild(_cell1);
+                                _cell2 = document.createElement("td");
+                                _cell2.innerText = data[i].fields.address;
+                                _row.appendChild(_cell2);
+                                _cell3 = document.createElement("td");
+                                _cell3.innerText = data[i].fields.disk;
+                                _row.appendChild(_cell3);
+                                _cell4 = document.createElement("td");
+                                _cell4.innerText = data[i].fields.cpu;
+                                _row.appendChild(_cell4);
+                                _cell5 = document.createElement("td");
+                                _cell5.innerText = data[i].fields.mem;
+                                _row.appendChild(_cell5);
+                                _cell6 = document.createElement("td");
+                                _cell6.innerText = data[i].fields.net;
+                                _row.appendChild(_cell6);
+                                _cell7 = document.createElement("td");
+                                _cell7.innerText = data[i].fields.service1;
+                                _row.appendChild(_cell7);
+                                _cell8 = document.createElement("td");
+                                _cell8.innerText = data[i].fields.service2;
+                                _row.appendChild(_cell8);
+                                _cell9 = document.createElement("td");
+                                _cell9.innerText = data[i].fields.service3;
+                                _row.appendChild(_cell9);
+                                _cell10 = document.createElement("td");
+                                _cell10.innerText = data[i].fields.service4;
+                                _row.appendChild(_cell10);
+                                _cell11 = document.createElement("td");
+                                _cell11.innerText = data[i].fields.vituralname;
+                                _row.appendChild(_cell11);
+                                _cell12 = document.createElement("td");
+                                _cell12.innerText = data[i].fields.physicalmachineip;
+                                _row.appendChild(_cell12);
+                                _cell13 = document.createElement("td");
+                                _cell13.innerText = data[i].fields.describing;
+                                _row.appendChild(_cell13);
+                                _cell14 = document.createElement("td");
+                                _cell14.innerText = data[i].fields.realorno;
+                                _row.appendChild(_cell14);
+                    }
+                })
+    });
+});
+
+
+
+
+
+
+    $(function () {
+
+        $('#search1').click(function () {
+
+            $.getJSON('/searchserver/',function(server){
+                    $("#_table").html("");
+                    var data = eval('(' + server + ')');
+                    var _table = document.getElementById("_table");
+                    var _row;var _cell1;var _cell2;var _cell3;var _cell4;var _cell5;var _cell6;var _cell7;var _cell8;
+                    var _cell9;var _cell10; var _cell11; var _cell12; var _cell13;var _cell14;
+                    for(var i = 0; i < data.length; i++) {
+                        _row = document.createElement("tr");
+                        document.getElementById("_table").appendChild(_row);
+                                _cell1 = document.createElement("td");
+                                _cell1.innerText = data[i].fields.systemtype;
+                                _row.appendChild(_cell1);
+                                _cell2 = document.createElement("td");
+                                _cell2.innerText = data[i].fields.address;
+                                _row.appendChild(_cell2);
+                                _cell3 = document.createElement("td");
+                                _cell3.innerText = data[i].fields.disk;
+                                _row.appendChild(_cell3);
+                                _cell4 = document.createElement("td");
+                                _cell4.innerText = data[i].fields.cpu;
+                                _row.appendChild(_cell4);
+                                _cell5 = document.createElement("td");
+                                _cell5.innerText = data[i].fields.mem;
+                                _row.appendChild(_cell5);
+                                _cell6 = document.createElement("td");
+                                _cell6.innerText = data[i].fields.net;
+                                _row.appendChild(_cell6);
+                                _cell7 = document.createElement("td");
+                                _cell7.innerText = data[i].fields.service1;
+                                _row.appendChild(_cell7);
+                                _cell8 = document.createElement("td");
+                                _cell8.innerText = data[i].fields.service2;
+                                _row.appendChild(_cell8);
+                                _cell9 = document.createElement("td");
+                                _cell9.innerText = data[i].fields.service3;
+                                _row.appendChild(_cell9);
+                                _cell10 = document.createElement("td");
+                                _cell10.innerText = data[i].fields.service4;
+                                _row.appendChild(_cell10);
+                                _cell11 = document.createElement("td");
+                                _cell11.innerText = data[i].fields.vituralname;
+                                _row.appendChild(_cell11);
+                                _cell12 = document.createElement("td");
+                                _cell12.innerText = data[i].fields.physicalmachineip;
+                                _row.appendChild(_cell12);
+                                _cell13 = document.createElement("td");
+                                _cell13.innerText = data[i].fields.describing;
+                                _row.appendChild(_cell13);
+                                _cell14 = document.createElement("td");
+                                _cell14.innerText = data[i].fields.realorno;
+                                _row.appendChild(_cell14);
+                    }
+                })
+    });
+});
+</script>

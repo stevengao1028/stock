@@ -1,0 +1,125 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static "Css/bootstrap.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "Css/bootstrap-responsive.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "Css/style.css" %}" />
+    <script type="text/javascript" src="{% static "Js/jquery.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/jquery.sorted.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/bootstrap.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/ckform.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/common.js" %}"></script>
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+
+
+    </style>
+</head>
+<form >
+<table class="table table-bordered table-hover definewidth m10">
+    <tr>
+        <td width="10%" class="tableleft">类型</td>
+        <td><input type="text" id="type" name="type"/></td>
+        <td width="10%" class="tableleft">型号</td>
+        <td><input type="text" id="model" name="model"/></td>
+        <td width="10%" class="tableleft">配置</td>
+        <td><input type="text" id="configure" name="configure"/></td>
+    </tr>
+    <tr>
+        <td width="10%" class="tableleft">主机IP</td>
+        <td><input type="text" id="address" name="address"/></td>
+        <td width="10%" class="tableleft">系统</td>
+        <td><input type="text" id="os" name="os"/></td>
+        <td width="10%" class="tableleft">SN</td>
+        <td><input type="text" id="sn" name="sn"/></td>
+    </tr>
+    <tr>
+        <td width="10%" class="tableleft">购买日期</td>
+        <td><input type="text" id="buydate" name="buydate"/></td>
+        <td width="10%" class="tableleft">保修到期</td>
+        <td><input type="text" id="maintenanceperiod" name="maintenanceperiod"/></td>
+        <td width="10%" class="tableleft">用途</td>
+        <td><input type="text" id="use" name="use"/></td>
+    </tr>
+    <tr>
+        <td width="10%" class="tableleft">位置</td>
+        <td><input type="text" id="position" name="position"/></td>
+        <td width="10%" class="tableleft">厂方联系</td>
+        <td><input type="text" id="vendorcontact" name="vendorcontact"/></td>
+        <td width="10%" class="tableleft">备注</td>
+        <td><input type="text" id="remark" name="remark"/></td>
+    </tr>
+        <td class="tableleft"></td>
+        <td>
+            <button type="button" class="btn btn-primary" name="save" id="save" >保存</button>&nbsp;&nbsp&nbsp&nbsp;&nbsp;
+            <button type="button" class="btn btn-success" name="backid" id="backid">返回列表</button>
+        </td>
+    </tr>
+</table>
+</form>
+</body>
+</html>
+<script>
+    $(function () {
+		$('#backid').click(function(){
+				window.location.href='/machine/';
+		 });
+
+    });
+    $(function () {
+        $('#save').click(function () {
+            var type =$("#type").val();
+            var model=$("#model").val()
+            var configure=$("#configure").val()
+            var address=$("#address").val()
+            var os=$("#os").val()
+            var sn=$("#sn").val()
+            var buydate=$("#buydate").val()
+            var maintenanceperiod=$("#maintenanceperiod").val()
+            var use=$("#use").val()
+            var position=$("#position").val()
+            var vendorcontact=$("#vendorcontact").val()
+            var remark=$("#remark").val()
+            //alert(address);
+            $.ajax({
+                     type: "POST",
+                     url: "/machineadd/",
+                     data: {type:type,
+                         model:model,
+                         configure:configure,
+                         address:address,
+                         os:os,
+                         sn:sn,
+                         buydate:buydate,
+                         maintenanceperiod:maintenanceperiod,
+                         use:use,
+                         position:position,
+                         vendorcontact:vendorcontact,
+                         remark:remark,
+
+                     },
+                     dataType: "text",
+                     success: function(reponse) {
+                              alert(reponse)
+                     }
+            });
+        });
+ })
+</script>

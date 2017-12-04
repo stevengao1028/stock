@@ -1,0 +1,149 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static "Css/bootstrap.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "Css/bootstrap-responsive.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "Css/style.css" %}" />
+    <script type="text/javascript" src="{% static "Js/jquery.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/jquery.sorted.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/bootstrap.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/ckform.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/common.js" %}"></script>
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+
+
+    </style>
+</head>
+<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;服务器管理：
+    <input type="text" name="rolename" id="rolename"class="abc input-default" placeholder="" value="">
+    <!--<button type="botton"  name="se" class="btn btn-primary" id="search">查询</button>&nbsp;&nbsp; <button type="button" class="btn btn-success" id="addnew">手动增加服务器</button>-->
+    <button type="botton" class="btn btn-primary" id="search">查询</button>&nbsp;&nbsp; <button type="button" class="btn btn-success" id="addnew">手动增加服务器</button>
+<table  class="table table-bordered table-hover definewidth m10" >
+    <thead>
+    <tr>
+        <th>主机IP</th>
+        <th>名称</th>
+        <th>磁盘使用</th>
+        <th>CPU使用</th>
+        <th>内存使用</th>
+        <th>网络</th>
+        <th>应用</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+      <tbody id="_table"></tbody>
+</table>
+<div class="inline pull-right page">
+         10122 条记录 1/507 页  <a href='#'>下一页</a>     <span class='current'>1</span><a href='#'>2</a><a href='/chinapost/index.php?m=Label&a=index&p=3'>3</a><a href='#'>4</a><a href='#'>5</a>  <a href='#' >下5页</a> <a href='#' >最后一页</a>    </div>
+</body>
+</html>
+<script>
+    $(function () {
+
+		$('#addnew').click(function(){
+
+				window.location.href='/deptadd';
+		 });
+    });
+
+    $(function () {
+        $('#search').click(function () {
+              // $.ajax({
+               // type: "POST",
+               // url: "/ssearch/",
+               // datatype: 'json',
+               // data: {name: "a"},
+               // success: function (server_list, statusText, xmlHttpRequest) {
+                    //先把表体部分清空
+				//eval获取返回的JSON对象集合
+                    //var data =(new Function("","return "+server_list))();
+            $.getJSON('/searchmachine/',function(server){
+                    var data = eval('(' + server + ')');
+                    alert(data);
+                    //$('#box').getJSON=data;
+                    var _table = document.getElementById("_table");
+                    var _row;var _cell1;var _cell2;var _cell3;var _cell4;var _cell5;var _cell6;var _cell7;var _cell8;
+                    var _cell9;var _cell10; var _cell11; var _cell12; var _cell13;var _cell14;
+                    for(var i = 0; i < data.length; i++) {
+                        _row = document.createElement("tr");
+                        document.getElementById("_table").appendChild(_row);
+                                _cell1 = document.createElement("td");
+                                _cell1.innerText = data[i].fields.Systemtype;
+                                _row.appendChild(_cell1);
+                                _cell2 = document.createElement("td");
+                                _cell2.innerText = data[i].fields.Address;
+                                _row.appendChild(_cell2);
+                                _cell3 = document.createElement("td");
+                                _cell3.innerText = data[i].fields.Disk;
+                                _row.appendChild(_cell3);
+                                _cell4 = document.createElement("td");
+                                _cell4.innerText = data[i].fields.Cpu;
+                                _row.appendChild(_cell4);
+                                _cell5 = document.createElement("td");
+                                _cell5.innerText = data[i].fields.Mem;
+                                _row.appendChild(_cell5);
+                                _cell6 = document.createElement("td");
+                                _cell6.innerText = data[i].fields.Net;
+                                _row.appendChild(_cell6);
+                                _cell7 = document.createElement("td");
+                                _cell7.innerText = data[i].fields.Service1;
+                                _row.appendChild(_cell7);
+                                _cell8 = document.createElement("td");
+                                _cell8.innerText = data[i].fields.Service2;
+                                _row.appendChild(_cell8);
+                                _cell9 = document.createElement("td");
+                                _cell9.innerText = data[i].fields.Service3;
+                                _row.appendChild(_cell9);
+                                _cell10 = document.createElement("td");
+                                _cell10.innerText = data[i].fields.Service4;
+                                _row.appendChild(_cell10);
+                                _cell11 = document.createElement("td");
+                                _cell11.innerText = data[i].fields.VituralName;
+                                _row.appendChild(_cell11);
+                                _cell12 = document.createElement("td");
+                                _cell12.innerText = data[i].fields.PhysicalMachineIP;
+                                _row.appendChild(_cell12);
+                                _cell13 = document.createElement("td");
+                                _cell13.innerText = data[i].fields.Describing;
+                                _row.appendChild(_cell13);
+                                _cell14 = document.createElement("td");
+                                _cell14.innerText = "操作";
+                                _row.appendChild(_cell14);
+                    }
+                })
+    });
+});
+$(function () {
+        $('#searcha').click(function () {
+               $.ajax({
+                type: "POST",
+                url: "/hello/",
+                datatype: 'html',
+                success: function (result) {
+
+                    $('#ss').html(result);
+
+                }
+            });
+    });
+});
+</script>

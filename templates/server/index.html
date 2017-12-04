@@ -1,0 +1,109 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static "Css/bootstrap.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "Css/bootstrap-responsive.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "Css/style.css" %}" />
+    <script type="text/javascript" src="{% static "Js/jquery.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/jquery.sorted.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/bootstrap.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/ckform.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/common.js" %}"></script>
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+<f class ="form-inline definewidth m20">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;服务器管理
+    <input type="text" name="searchtext" value="" id="searchtext" class="abc input-default" placeholder="" value="">
+    <!--<button type="botton"  name="se" class="btn btn-primary" id="search">查询</button>&nbsp;&nbsp; <button type="button" class="btn btn-success" id="addnew">手动增加服务器</button>-->
+    <button type="botton" class="btn btn-primary" id="search">查询</button>&nbsp;&nbsp;
+    <button type="button" class="btn btn-success" id="addnew">增加服务器</button>&nbsp;&nbsp;
+    <button type="button" class="btn btn-success" id="console">操作</button>
+    <button type="button" class="btn btn-success" id="select">提交测试</button>
+<table  class="table table-bordered table-hover definewidth m10" >
+    <thead>
+    <tr>
+        <th width="6%">选择</th>
+        <th width="6%">系统</th>
+        <th width="6%">主机IP</th>
+        <th width="6%">磁盘</th>
+        <th width="6%">CPU</th>
+        <th width="6%">内存</th>
+        <th width="6%">网络</th>
+        <th width="6%">应用1</th>
+        <th width="6%">应用2</th>
+        <th width="6%">应用3</th>
+        <th width="6%">应用4</th>
+        <th width="6%">虚机名称</th>
+        <th width="6%">虚拟主机</th>
+        <th width="6%">描述</th>
+        <th width="6%">虚拟/物理</th>
+    </tr>
+
+    </thead>
+      <tbody id="_table"></tbody>
+</table>
+<div class="inline pull-right page">
+         10122 条记录 1/507 页  <a href='#'>下一页</a>     <span class='current'>1</span><a href='#'>2</a><a href='/chinapost/index.php?m=Label&a=index&p=3'>3</a><a href='#'>4</a><a href='#'>5</a>  <a href='#' >下5页</a> <a href='#' >最后一页</a>    </div>
+</body>
+</html>
+<script>
+    $(function () {
+
+		$('#addnew').click(function(){
+
+				window.location.href='/serveradd/';
+		 });
+    });
+
+ $(function () {
+        $('#search').click(function () {
+            var searchtext =$("#searchtext").val();
+            alert(searchtext);
+            $.ajax({
+                     type: "POST",
+                     url: "/searchmachine/",
+                     data: {searchtext:searchtext},
+                     dataType: "json",
+                     success: function(server) {
+                         alert("ok");
+                     }
+                     })
+        }
+
+
+$(function () {
+    $('#select').click(function(){
+    var iplist = []
+    var r = document.getElementsByName("getip");
+    for (var i = 0; i < r.length; i++) {
+        if (r[i].checked) {
+{#            alert(r[i].value + "," + r[i].nextSibling.nodeValue);#}
+              iplist.push(r[i].value);
+        }
+    }
+    alert(iplist);
+     });
+});
+</script>

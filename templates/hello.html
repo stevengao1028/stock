@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1"  class="table table-bordered table-hover definewidth m10" >
+    <tr>
+        <td>用户名</td>
+        <td>密码</td>
+        <td>Frist name</td>
+        <td>Last name</td>
+    </tr>
+    <tr>
+        {% for plan in plan_list  %}
+        <td>{{ plan.plan_date }}</td>
+        <td>{{ plan.stock_code }}</td>
+        <td>{{ plan.stock_name }}</td>
+        <td>{{ plan.stock_setor}}</td>
+            </tr>
+        {% endfor %}
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,118 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static "Css/bootstrap.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "Css/bootstrap-responsive.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "Css/style.css" %}" />
+    <script type="text/javascript" src="{% static "Js/jquery.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/jquery.sorted.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/bootstrap.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/ckform.js" %}"></script>
+    <script type="text/javascript" src="{% static "Js/common.js" %}"></script>
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+<br>
+<f class ="form-inline definewidth m20">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号管理：
+    <input type="text" name="rolename" id="rolename"class="abc input-default" placeholder="" value="">
+    <!--<button type="botton"  name="se" class="btn btn-primary" id="search">查询</button>&nbsp;&nbsp; <button type="button" class="btn btn-success" id="addnew">手动增加服务器</button>-->
+    <button type="botton" class="btn btn-primary" id="search">查询</button>&nbsp;&nbsp;
+    <button type="button" class="btn btn-success" id="account">账户管理</button>&nbsp;&nbsp;
+<table class="table table-bordered table-hover definewidth m10" >
+    <thead>
+    <tr>
+        <th width="6%">类型</th>
+        <th width="6%">IP地址</th>
+        <th width="6%">用户名</th>
+        <th width="6%">密码</th>
+        <th width="6%">备注</th>
+    </tr>
+    </thead>
+   <tbody id="_table"></tbody>
+        </table>
+		</body>
+		</html>
+
+<script>
+    $(function () {
+
+		$('#account').click(function(){
+
+				window.location.href="/admin/";
+		 });
+
+
+    });
+
+	function del(id)
+	{
+
+
+		if(confirm("确定要删除吗？"))
+		{
+
+			var url = "index.html";
+
+			window.location.href=url;
+
+		}
+
+
+
+	}
+
+$(function () {
+
+        $('#search').click(function () {
+
+            $.getJSON('/searchaccount/',function(account){
+                    $("#_table").html("");
+                    var data = eval('(' + account + ')');
+                    var _table = document.getElementById("_table");
+                    var _row;var _cell1;var _cell2;var _cell3;var _cell4;var _cell5;
+                    for(var i = 0; i < data.length; i++) {
+                        _row = document.createElement("tr");
+                        document.getElementById("_table").appendChild(_row);
+                                _cell1 = document.createElement("td");
+                                _cell1.innerText = data[i].fields.type;
+                                _row.appendChild(_cell1);
+                                _cell2 = document.createElement("td");
+                                _cell2.innerText = data[i].fields.address;
+                                _row.appendChild(_cell2);
+                                _cell3 = document.createElement("td");
+                                _cell3.innerText = data[i].fields.name;
+                                _row.appendChild(_cell3);
+                                _cell4 = document.createElement("td");
+                                _cell4.innerText = data[i].fields.passwd;
+                                _row.appendChild(_cell4);
+                                _cell5 = document.createElement("td");
+                                _cell5.innerText = data[i].fields.remark;
+                                _row.appendChild(_cell5);
+                    }
+                })
+    });
+});
+</script>
