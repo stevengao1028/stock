@@ -54,10 +54,8 @@ for i in range(len(list)-1):
     row ="(\""+dic['code']+"\",\""+dic['name']+"\",\""+str(dic['per'])+"\",\""+str(dic['per_d'])+"\")"
     data.append(row)
 
-# print data
+print data
 insert_data("Finance","pe",data)
-
-
 
 
 
